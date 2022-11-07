@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -34,9 +35,9 @@
          </font>
       </Label>
       <MFXTextField fx:id="LoginUsername" layoutX="119.0" layoutY="71.0" prefHeight="40.0" prefWidth="259.0" />
-      <MFXTextField fx:id="LoginPassword" layoutX="119.0" layoutY="159.0" prefHeight="50.0" prefWidth="259.0" />
       <Label fx:id="UsernameValidation" layoutX="119.0" layoutY="117.0" prefHeight="31.0" prefWidth="259.0" textFill="RED" />
       <Label fx:id="PasswordValidation" layoutX="119.0" layoutY="209.0" prefHeight="31.0" prefWidth="259.0" textFill="RED" />
       <Label fx:id="LoginValidation" layoutX="26.0" layoutY="216.0" prefHeight="25.0" prefWidth="352.0" textFill="RED" />
+      <MFXPasswordField fx:id="LoginPassword" layoutX="119.0" layoutY="159.0" prefHeight="51.0" prefWidth="259.0" />
    </children>
 </AnchorPane>

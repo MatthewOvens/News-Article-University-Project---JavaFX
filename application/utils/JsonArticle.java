@@ -186,8 +186,9 @@ public class JsonArticle {
 	 * @param image to be converted
 	 * @return string corresponding to the given image
 	 */
-	private static String imagetToString(Image image) {// imageToString
+	public static String imagetToString(Image image) {// imageToString
 		BufferedImage imageData = SwingFXUtils.fromFXImage(image, null);
+		System.out.println("not here");
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		try {
 			ImageIO.write(imageData, "png", bos);

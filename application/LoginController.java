@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import application.news.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,7 +35,7 @@ public class LoginController {
     private MFXButton Login;
 
     @FXML
-    private MFXTextField LoginPassword;
+    private MFXPasswordField LoginPassword;
 
     @FXML
     private MFXTextField LoginUsername;
@@ -84,35 +85,10 @@ public class LoginController {
     		LoginValidation.setText("Invalid username or password");
     		return;
     	}
-    	FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.READER.getFxmlFile()));
-		Parent root;
-		try {
-			root = (Parent) loader.load();
-			Stage stage = new Stage();
-			stage.setScene(new Scene(root));
+    	this.loggedUsr = usr;
 			
-			NewsReaderController controller = loader.<NewsReaderController>getController();
-			
-			Properties prop = new Properties();
-			prop.setProperty(ConnectionManager.ATTR_SERVICE_URL, "https://sanger.dia.fi.upm.es/pui-rest-news/");
-			prop.setProperty(ConnectionManager.ATTR_REQUIRE_SELF_CERT, "TRUE");
-			
-			ConnectionManager connection = new ConnectionManager(prop);
-
-			connection.setAnonymousAPIKey("ANON03_336");
-			controller.setConnectionManager(connection);	
-			
-			controller.setUsr(usr);
-			
-	    	Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-	    	currentStage.close();
-	    	
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (AuthenticationError e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	    currentStage.close();
 
     }
 
