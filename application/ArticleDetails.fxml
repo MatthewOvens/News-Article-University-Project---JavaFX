@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXToggleButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ArticleDetailsController">
+   <children>
+      <Label fx:id="BodyAbstractLable" alignment="CENTER" layoutX="434.0" layoutY="146.0" prefHeight="31.0" prefWidth="70.0" style="-fx-background-color: #F3F3F3; -fx-border-color: #E7E6E6;" text="Body">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="DetailsText" editable="false" layoutX="23.0" layoutY="177.0" wrapText="true" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" />
+      <ImageView fx:id="DetailsImage" fitHeight="135.0" fitWidth="158.0" layoutX="22.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
+      <MFXButton fx:id="BackBtn" buttonType="RAISED" layoutX="22.0" layoutY="363.0" onAction="#onBackBtn" prefHeight="31.0" prefWidth="63.0" text="Back">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </MFXButton>
+      <MFXToggleButton fx:id="BodyToAbstract" layoutX="345.0" layoutY="357.0" onAction="#onChangeBodyAbstract" text="Abstract/Body">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </MFXToggleButton>
+      <Label layoutX="231.0" layoutY="39.0" text="Title:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="231.0" layoutY="84.0" text="Subtitle:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="231.0" layoutY="126.0" text="Category:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="DetailsTitle" layoutX="309.0" layoutY="38.0" prefHeight="22.0" prefWidth="219.0" />
+      <Label fx:id="DetailsSubtitle" layoutX="309.0" layoutY="83.0" prefHeight="22.0" prefWidth="219.0" />
+      <Label fx:id="DetailsCategory" layoutX="309.0" layoutY="125.0" prefHeight="22.0" prefWidth="219.0" />
+   </children>
+</AnchorPane>

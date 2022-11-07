@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXToggleButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.HTMLEditor?>
+
+<AnchorPane prefHeight="420.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ArticleEditController">
+   <children>
+      <HTMLEditor fx:id="EditText" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="10.0" layoutY="164.0" prefHeight="206.0" prefWidth="547.0" />
+      <MFXToggleButton fx:id="BodytoAbstract" layoutX="452.0" layoutY="122.0" text="Body">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </MFXToggleButton>
+      <MFXToggleButton fx:id="TextToHtml" layoutX="355.0" layoutY="122.0" text="Text">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </MFXToggleButton>
+      <MFXButton fx:id="Back" buttonType="RAISED" layoutX="14.0" layoutY="381.0" onAction="#onBack" text="Back">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </MFXButton>
+      <MFXButton fx:id="SendAndBack" buttonType="RAISED" layoutX="80.0" layoutY="381.0" onAction="#onSendAndBack" text="Send &amp; Back">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </MFXButton>
+      <MFXButton fx:id="SaveToFile" buttonType="RAISED" layoutX="459.0" layoutY="381.0" onAction="#onSaveToFile" text="Save to file">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </MFXButton>
+      <ImageView fx:id="EditImage" fitHeight="133.0" fitWidth="159.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="210.0" layoutY="36.0" prefHeight="22.0" prefWidth="45.0" text="Title:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="210.0" layoutY="76.0" text="Subtitle:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="EditTitle" layoutX="283.0" layoutY="31.0" prefHeight="31.0" prefWidth="236.0" />
+      <TextField fx:id="EditSubtitle" layoutX="283.0" layoutY="71.0" prefHeight="31.0" prefWidth="236.0" />
+      <MenuButton layoutX="205.0" layoutY="127.0" mnemonicParsing="false" text="Category">
+        <items>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <RadioButton mnemonicParsing="false" text="National" />
+               </graphic>
+            </Menu>
+        </items>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </MenuButton>
+   </children>
+</AnchorPane>
