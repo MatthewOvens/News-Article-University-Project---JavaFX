@@ -35,6 +35,6 @@
          </font>
       </MenuButton>
       <ListView fx:id="ListofArticles" layoutX="14.0" layoutY="141.0" prefHeight="241.0" prefWidth="198.0" />
-      <MFXComboBox fx:id="categories" layoutX="20.0" layoutY="76.0" />
+      <MFXComboBox fx:id="categories" alignment="CENTER" floatMode="DISABLED" layoutX="20.0" layoutY="76.0" />
    </children>
 </AnchorPane>

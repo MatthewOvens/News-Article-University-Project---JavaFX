@@ -115,19 +115,22 @@ public class NewsReaderController {
 
     @FXML
     void onEdit(ActionEvent event) {
-    	Scene parentScene = this.ReadMore.getScene();
-		FXMLLoader loader = null;
-		try {
-			loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-			Pane root = loader.load();
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			Window parentStage = parentScene.getWindow();
-			Stage stage = new Stage();
-			stage.initOwner(parentStage);
-			stage.setScene(scene);
+//    	Scene parentScene = this.ReadMore.getScene();
+//		FXMLLoader loader = null;
+//		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+//			Pane root = loader.load();
+//			Scene scene = new Scene(root);
+//			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+//			Window parentStage = parentScene.getWindow();
+//			Stage stage = new Stage();
+//			stage.initOwner(parentStage);
+//			stage.setScene(scene);
+//			stage.setTitle("Edit Article");
+			
+			Stage stage = openScene(loader, this.ReadMore.getScene(), AppScenes.EDITOR.getFxmlFile());
 			stage.setTitle("Edit Article");
-
+			
 			ArticleEditController controller = loader.<ArticleEditController>getController();
 
 			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
@@ -156,9 +159,9 @@ public class NewsReaderController {
 				//TODO alert the user that he hasn't select any article
 			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
     }
 
     @FXML
@@ -177,22 +180,24 @@ public class NewsReaderController {
     	 File selectedFile = fileChooser.showOpenDialog(parentStage);
     	 //Getting the URI for the local file
     	 if (selectedFile != null) {
-    		 Path path = FileSystems.getDefault().getPath(
-    				 selectedFile.getAbsolutePath());
+    		 Path path = FileSystems.getDefault().getPath(selectedFile.getAbsolutePath());
 
-    		 Scene parentScene = this.ReadMore.getScene();
-			FXMLLoader loader = null;
-			try {
-				loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-				Pane root = loader.load();
-				Scene scene = new Scene(root);
-				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-				Window parentStageNews = parentScene.getWindow();
-				Stage stage = new Stage();
-				stage.initOwner(parentStageNews);
-				stage.setScene(scene);
-				stage.setTitle("Edit Article");
-
+//    		Scene parentScene = this.ReadMore.getScene();
+//			FXMLLoader loader = null;
+//			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+//				Pane root = loader.load();
+//				Scene scene = new Scene(root);
+//				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+//				Window parentStageNews = parentScene.getWindow();
+//				Stage stage = new Stage();
+//				stage.initOwner(parentStageNews);
+//				stage.setScene(scene);
+//				stage.setTitle("Edit Article");
+				
+				Stage stage = openScene(loader, this.ReadMore.getScene(), AppScenes.EDITOR.getFxmlFile());
+				stage.setTitle("Edit Article from file");
+				
 				ArticleEditController controller = loader.<ArticleEditController>getController();
 
 				controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
@@ -200,30 +205,31 @@ public class NewsReaderController {
 				//TODO Can the user save it to database? Maybe check if he's logged?
 				controller.setUsr(usr);
 				
-				Article articleFromFile = JsonArticle.jsonToArticle(JsonArticle.readFile(path.toString()));
-				
-				if(articleFromFile != null)
-				{
-					controller.setArticle(articleFromFile);
-					//Uncomment next sentence if you want clear change when user close the window
-					//stage.setOnCloseRequest(ev ->controller.exitEdit(ev));
-					//user response is required before continuing with the program
-					stage.initModality(Modality.WINDOW_MODAL);
-					stage.showAndWait();
-
-					if (controller.getIsSaved()){ 
-						this.getData();
+				try {
+					Article articleFromFile = JsonArticle.jsonToArticle(JsonArticle.readFile(path.toString()));
+					
+					if(articleFromFile != null)
+					{
+						controller.setArticle(articleFromFile);
+						//Uncomment next sentence if you want clear change when user close the window
+						//stage.setOnCloseRequest(ev ->controller.exitEdit(ev));
+						//user response is required before continuing with the program
+						stage.initModality(Modality.WINDOW_MODAL);
+						stage.showAndWait();
+	
+						if (controller.getIsSaved()){ 
+							this.getData();
+						}
 					}
-				}
-				else
-				{
-					System.out.println("Nothing is selected");
-					//TODO alert the user that he hasn't select any article
-				}
+					else
+					{
+						System.out.println("Nothing is selected");
+						//TODO alert the user that he hasn't select any article
+					}
 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
     		 
     	 }
     }
@@ -231,23 +237,26 @@ public class NewsReaderController {
 
     @FXML
     void onNewArticle(ActionEvent event) {
-    	Scene parentScene = this.ReadMore.getScene();
-		FXMLLoader loader = null;
-		try {
-			loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-			Pane root = loader.load();
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			Window parentStage = parentScene.getWindow();
-			Stage stage = new Stage();
-			stage.initOwner(parentStage);
-			stage.setScene(scene);
-			stage.setTitle("Create Article");
-
+//    	Scene parentScene = this.ReadMore.getScene();
+//		FXMLLoader loader = null;
+//		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+//			Pane root = loader.load();
+//			Scene scene = new Scene(root);
+//			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+//			Window parentStage = parentScene.getWindow();
+//			Stage stage = new Stage();
+//			stage.initOwner(parentStage);
+//			stage.setScene(scene);
+//			stage.setTitle("Create Article");
+			
+			Stage stage = openScene(loader, this.ReadMore.getScene(), AppScenes.EDITOR.getFxmlFile());
+			stage.setTitle("Create a new article");
+			
 			ArticleEditController controller = loader.<ArticleEditController>getController();
 
 			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
-			controller.setUsr(null);
+			controller.setUsr(null); //Error
 			controller.setArticle(null);
 			//Uncomment next sentence if you want clear change when user close the window
 			//stage.setOnCloseRequest(ev ->controller.exitEdit(ev));
@@ -258,75 +267,89 @@ public class NewsReaderController {
 			if (controller.getIsSaved()){ 
 				this.getData();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
     }
 
     @FXML
     void onReadMore(ActionEvent event) {
     	
-    	try {
-    		FXMLLoader loader = new FXMLLoader (getClass().getResource(
-			AppScenes.NEWS_DETAILS.getFxmlFile()));
-    		Parent root1 = (Parent) loader.load();
-    		Stage stage = new Stage();
-    		stage.setScene(new Scene(root1));
+//    	try {
+    		FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.NEWS_DETAILS.getFxmlFile()));
+//			AppScenes.NEWS_DETAILS.getFxmlFile()));
+//    		Parent root1 = (Parent) loader.load();
+//    		Stage stage = new Stage();
+//    		stage.setScene(new Scene(root1));
+    				
+    		Stage stage = openScene(loader, this.ReadMore.getScene(), AppScenes.NEWS_DETAILS.getFxmlFile());
+    		stage.setTitle("Article details");
+    		
     		ArticleDetailsController controller = loader.<ArticleDetailsController>getController();
-   
     		controller.initData(ListofArticles.getSelectionModel().getSelectedItem(), getUsr());
     		
     		stage.show();
-    	}
-    	catch(Exception e) {
-    		System.out.println(e.toString());
-    	}
+//    	}
+//    	catch(Exception e) {
+//    		System.out.println(e.toString());
+//    	}
     	
 
     }
 
     @FXML
-    void onToLogin(ActionEvent event) {
-    	try {
-    		
+    void onToLogin(ActionEvent event) {    	
+//    	Scene parentScene = this.ReadMore.getScene();
+//		FXMLLoader loader = null;
+			
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.LOGIN.getFxmlFile()));
+		
+		///////
+		Stage stage = openScene(loader, this.ReadMore.getScene(), AppScenes.LOGIN.getFxmlFile());
+		stage.setTitle("Login");
+		
+		LoginController controller = loader.<LoginController>getController();
+		controller.setConnectionManager(this.newsReaderModel.getConnectionManager());
+		//Uncomment next sentence if you want clear change when user close the window
+		//stage.setOnCloseRequest(ev ->controller.exitEdit(ev));
+		//user response is required before continuing with the program
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.showAndWait();
 
-    	}
-    	catch(Exception e) {
-    		System.out.println(e.toString());
-    	}
+		if (controller.getLoggedUsr() != null) { 
+			System.out.println("Nice user");
+			this.setUsr(controller.getLoggedUsr());
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Login successful", ButtonType.OK);
+			alert.showAndWait();
+		}
+    }
+    
+    /*
+     * Function to avoid duplicate code. Used to create a stage
+     */
+    Stage openScene(FXMLLoader loader, Scene parentScene, String name) {
     	
-    	Scene parentScene = this.ReadMore.getScene();
-		FXMLLoader loader = null;
-		try {
-			loader = new FXMLLoader(getClass().getResource(AppScenes.LOGIN.getFxmlFile()));
+    	Stage stage = null;
+    	try {
 			Pane root = loader.load();
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Window parentStage = parentScene.getWindow();
-			Stage stage = new Stage();
+			stage = new Stage();
 			stage.initOwner(parentStage);
 			stage.setScene(scene);
-			stage.setTitle("Login");
-
-			LoginController controller = loader.<LoginController>getController();
-
-			controller.setConnectionManager(this.newsReaderModel.getConnectionManager());
-			//Uncomment next sentence if you want clear change when user close the window
-			//stage.setOnCloseRequest(ev ->controller.exitEdit(ev));
-			//user response is required before continuing with the program
-			stage.initModality(Modality.WINDOW_MODAL);
-			stage.showAndWait();
-
-			if (controller.getLoggedUsr() != null) { 
-				System.out.println("Nice user");
-				this.setUsr(controller.getLoggedUsr());
-				Alert alert = new Alert(AlertType.CONFIRMATION, "Login successful", ButtonType.OK);
-				alert.showAndWait();
+			if(name.split(".").length > 0) {
+				System.out.println(name.split(".")[0]);
 			}
-		} catch (Exception e) {
+			
+	    } catch (Exception e) {
 			e.printStackTrace();
 		}
+    	
+    	return stage;
+    	
     }
+    
 
 	public NewsReaderController() {
 		//TODO

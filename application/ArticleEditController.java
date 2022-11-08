@@ -47,10 +47,7 @@ import javafx.stage.Window;
 import serverConection.ConnectionManager;
 import serverConection.exceptions.ServerCommunicationError;
 
-/**
- * @author ÁngelLucas
- *
- */
+
 public class ArticleEditController {
 	/**
 	 * Connection used to send article to server after editing process
@@ -114,12 +111,7 @@ public class ArticleEditController {
 
     @FXML
     void onSaveToFile(ActionEvent event) {
-		this.editingArticle.titleProperty().set(this.EditTitle.getText());
-		this.editingArticle.subtitleProperty().set(this.EditSubtitle.getText());
-		this.editingArticle.abstractTextProperty().set(this.EditTextAbstract.getHtmlText());
-		this.editingArticle.setCategory(this.categories.getSelectedItem());
-		this.editingArticle.bodyTextProperty().set(this.EditTextBody.getHtmlText());
-		//set image
+		modifyArticle();
 		this.write();
 		Alert alert = new Alert(AlertType.CONFIRMATION, "Data successfully saved to file", ButtonType.OK);
 		alert.showAndWait();
@@ -192,7 +184,7 @@ public class ArticleEditController {
 				ImagePickerController controller = loader.<ImagePickerController>getController();
 				Image image = controller.getImage();
 				if (image != null) {
-					editingArticle.setImage(image);
+					//editingArticle.setImage(image);
 					//TODO Update image on UI
 					this.EditImage.setImage(image);
 				}
@@ -226,14 +218,8 @@ public class ArticleEditController {
 			
 			//TODO check if it is edit. Save to file :)
 			if(this.editMode) {
-				this.editingArticle.titleProperty().set(titleText);
-				this.editingArticle.subtitleProperty().set(this.EditSubtitle.getText());
-				this.editingArticle.abstractTextProperty().set(this.EditTextAbstract.getHtmlText());
-				this.editingArticle.setCategory(category);
-				this.editingArticle.bodyTextProperty().set(this.EditTextBody.getHtmlText());
-				//set image
+				modifyArticle();
 				this.editingArticle.commit();
-				
 				this.connection.saveArticle(this.editingArticle.getArticleOriginal());
 			}
 			else
@@ -248,6 +234,18 @@ public class ArticleEditController {
 		
 		
 		return true;
+	}
+	
+	/*
+	 * Function to avoid duplicate code. It actually modify the article
+	 */
+	void modifyArticle() {
+		this.editingArticle.titleProperty().set(this.EditTitle.getText());
+		this.editingArticle.subtitleProperty().set(this.EditSubtitle.getText());
+		this.editingArticle.abstractTextProperty().set(this.EditTextAbstract.getHtmlText());
+		this.editingArticle.setCategory(this.categories.getSelectedItem());
+		this.editingArticle.bodyTextProperty().set(this.EditTextBody.getHtmlText());
+		this.editingArticle.setImage(this.EditImage.getImage());		
 	}
 	
 	/**
@@ -324,6 +322,9 @@ public class ArticleEditController {
 	 *            the article to set
 	 */
 	void setArticle(Article article) {
+		
+		//Check of the User??
+		
 		this.editingArticle = (article != null) ? new ArticleEditModel(article) : new ArticleEditModel(usr);
 		//TODO update UI
 		if(article != null) {
@@ -332,7 +333,7 @@ public class ArticleEditController {
 			this.EditTextAbstract.setHtmlText(article.getAbstractText());
 			this.EditTextBody.setHtmlText(article.getBodyText());
 			this.categories.selectItem(Categories.valueOf(article.getCategory().toUpperCase()));
-			//image
+			this.EditImage.setImage(article.getImageData());
 			
 			this.editMode = true;
 		}

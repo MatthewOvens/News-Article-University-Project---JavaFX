@@ -1,6 +1,3 @@
-/**
- * 
- */
 package application;
 
 import application.news.Article;
@@ -14,8 +11,6 @@ import javafx.scene.image.Image;
 /**
  *This class is used to represent an article when it is editing
  * This class is needed to develop ArticleEditController
- * @author ÁngelLucas
- *
  */
 class ArticleEditModel {
 	/**
@@ -75,18 +70,18 @@ class ArticleEditModel {
 	 *  there is a change on edited article
 	 */
 	private void addedChangeListener(){
- 	 this.edited.abstractTextProperty().addListener(
+		this.edited.abstractTextProperty().addListener(
+					 (observable, oldvalue, newvalue) ->this.bModified =  true);
+	 	this.edited.bodyTextProperty().addListener(
 				 (observable, oldvalue, newvalue) ->this.bModified =  true);
- 	this.edited.bodyTextProperty().addListener(
-			 (observable, oldvalue, newvalue) ->this.bModified =  true);
- 	/*this.edited.isPublishProperty().addListener(
-			 (observable, oldvalue, newvalue) ->this.bModified =  true);*/
- 	this.edited.isDeletedProperty().addListener(
-			 (observable, oldvalue, newvalue) ->this.bModified =  true);
- 	this.edited.titleProperty().addListener(
-			 (observable, oldvalue, newvalue) ->this.bModified =  true);
- 	this.edited.subtitleProperty().addListener(
-			 (observable, oldvalue, newvalue) ->this.bModified =  true);
+	 	/*this.edited.isPublishProperty().addListener(
+				 (observable, oldvalue, newvalue) ->this.bModified =  true);*/
+	 	this.edited.isDeletedProperty().addListener(
+				 (observable, oldvalue, newvalue) ->this.bModified =  true);
+	 	this.edited.titleProperty().addListener(
+				 (observable, oldvalue, newvalue) ->this.bModified =  true);
+	 	this.edited.subtitleProperty().addListener(
+				 (observable, oldvalue, newvalue) ->this.bModified =  true);
 	}
 	
 	/**
@@ -109,8 +104,6 @@ class ArticleEditModel {
 		this.bModified = false;
 		this.original.setNeedBeSaved(true);
 	}
-	
-	
 	
 	
 	/**
