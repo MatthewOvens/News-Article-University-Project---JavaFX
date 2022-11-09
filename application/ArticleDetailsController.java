@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 
 
 public class ArticleDetailsController {
-	//TODO add attributes and methods as needed
 	/**
 	 * Registered user
 	 */
@@ -27,56 +26,32 @@ public class ArticleDetailsController {
      */
     private Article article;
     
+    @FXML // fx:id="detailsTitle"
+    private Label detailsTitle; // Value injected by FXMLLoader
+    @FXML // fx:id="detailsSubtitle"
+    private Label detailsSubtitle; // Value injected by FXMLLoader
+    @FXML // fx:id="detailsCategory"
+    private Label detailsCategory; // Value injected by FXMLLoader
+    @FXML // fx:id="detailsImage"
+    private ImageView detailsImage; // Value injected by FXMLLoader
     
-    
-//    private NewsReaderModel newsReaderModel = new NewsReaderModel();
-    
-    
-    
-    @FXML // fx:id="DetailsTitle"
-    private Label DetailsTitle; // Value injected by FXMLLoader
-    @FXML // fx:id="DetailsSubtitle"
-    private Label DetailsSubtitle; // Value injected by FXMLLoader
-    @FXML // fx:id="DetailsCategory"
-    private Label DetailsCategory; // Value injected by FXMLLoader
-    @FXML // fx:id="DetailsImage"
-    private ImageView DetailsImage; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="BodyAbstractLable"
-    private Label BodyAbstractLable; // Value injected by FXMLLoader 
-    @FXML // fx:id="DetailsText"
-    private TextArea DetailsText; // Value injected by FXMLLoader 
-    @FXML // fx:id="BodyToAbstract"
-    private MFXToggleButton BodyToAbstract; // Value injected by FXMLLoader
+    @FXML // fx:id="bodyAbstractLable"
+    private Label bodyAbstractLable; // Value injected by FXMLLoader 
+    @FXML // fx:id="detailsText"
+    private TextArea detailsText; // Value injected by FXMLLoader 
+    @FXML // fx:id="bodyToAbstract"
+    private MFXToggleButton bodyToAbstract; // Value injected by FXMLLoader
 
     void initialize() {
-    	assert DetailsTitle != null : "fx:id=\"DetailsTitle\" was not injected: check your FXML file 'ArticleDetails.fxml'.";
-        assert DetailsSubtitle != null : "fx:id=\"DetailsSubtitle\" was not injected: check your FXML file 'ArticleDetails.fxml'.";
-        assert DetailsCategory != null : "fx:id=\"DetailsCategory\" was not injected: check your FXML file 'ArticleDetails.fxml'.";
+    	assert detailsTitle != null : "fx:id=\"detailsTitle\" was not injected: check your FXML file 'ArticleDetails.fxml'.";
+        assert detailsSubtitle != null : "fx:id=\"detailsSubtitle\" was not injected: check your FXML file 'ArticleDetails.fxml'.";
+        assert detailsCategory != null : "fx:id=\"detailsCategory\" was not injected: check your FXML file 'ArticleDetails.fxml'.";
     }
     
     void initData(Article article, User user) {
-    	
 		setUsr(user);
     	setArticle(article);
     	setVariables();
-    	
-    	//Debug
-    	System.out.print(this.article.getAbstractText());
-    	System.out.print("\n");
-    	System.out.print(this.article.getCategory());
-    	System.out.print("\n");
-    	System.out.print(this.article.getBodyText());
-    	System.out.print("\n");
-    	System.out.print(this.article.getIdArticle());
-    	System.out.print("\n");
-    	System.out.print(this.article.getImageData());
-    	System.out.print("\n");
-    	System.out.print(this.usr);
-    	System.out.print("\n");
-    	
-//    	System.out.print(newsReaderModel.getFullArticle(this.article.getIdArticle()));
-    	
     }
 
 	/**
@@ -87,7 +62,6 @@ public class ArticleDetailsController {
 		if (usr == null) {
 			return; //Not logged user
 		}
-		//TODO Update UI information
 	}
 
 	/**
@@ -95,7 +69,6 @@ public class ArticleDetailsController {
 	 */
 	void setArticle(Article article) {
 		this.article = article;
-		//TODO complete this method
 	}
 	
 	/**
@@ -103,20 +76,20 @@ public class ArticleDetailsController {
 	 */
 	void setVariables() {
 		
-		DetailsCategory.setText(article.getCategory());
-		DetailsSubtitle.setText(article.getSubtitle());
-		DetailsTitle.setText(article.getTitle());
+		detailsCategory.setText(article.getCategory());
+		detailsSubtitle.setText(article.getSubtitle());
+		detailsTitle.setText(article.getTitle());
 
 		if(article.getImageData() != null) {
-			DetailsImage.setImage(article.getImageData());
+			detailsImage.setImage(article.getImageData());
 		}
 		else {
 			Image image = new Image("./NewsArticleProj/images/noImage.jpg");
-			DetailsImage.setImage(image);
+			detailsImage.setImage(image);
 		}
 		
-		BodyAbstractLable.setText("Abstract");
-		DetailsText.setText(article.getAbstractText());
+		bodyAbstractLable.setText("Abstract");
+		detailsText.setText(article.getAbstractText());
 		
 	}
 	
@@ -128,13 +101,13 @@ public class ArticleDetailsController {
 
 	@FXML
 	void onChangeBodyAbstract() {	
-		if(BodyToAbstract.isSelected()) {
-			BodyAbstractLable.setText("Body");
-			DetailsText.setText(article.getBodyText());
+		if(bodyToAbstract.isSelected()) {
+			bodyAbstractLable.setText("Body");
+			detailsText.setText(article.getBodyText());
 		}
 		else {
-			BodyAbstractLable.setText("Abstract");
-			DetailsText.setText(article.getAbstractText());
+			bodyAbstractLable.setText("Abstract");
+			detailsText.setText(article.getAbstractText());
 		}
 		
 	}

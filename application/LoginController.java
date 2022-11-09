@@ -29,28 +29,28 @@ public class LoginController {
 	private User loggedUsr = null;
 	
     @FXML
-    private MFXButton Cancel;
+    private MFXButton cancel;
 
     @FXML
-    private MFXButton Login;
+    private MFXButton login;
 
     @FXML
-    private MFXPasswordField LoginPassword;
+    private MFXPasswordField loginPassword;
 
     @FXML
-    private MFXTextField LoginUsername;
+    private MFXTextField loginUsername;
 
     @FXML
     private AnchorPane loginWindow;
     
     @FXML
-    private Label LoginValidation;
+    private Label loginValidation;
 
     @FXML
-    private Label PasswordValidation;
+    private Label passwordValidation;
 
     @FXML
-    private Label UsernameValidation;
+    private Label usernameValidation;
 
     @FXML
     void onCancel(ActionEvent event) {
@@ -61,18 +61,18 @@ public class LoginController {
     @FXML
     void onLogin(ActionEvent event) {
     	
-    	UsernameValidation.setText("");
-    	PasswordValidation.setText("");
-    	LoginValidation.setText("");
+    	usernameValidation.setText("");
+    	passwordValidation.setText("");
+    	loginValidation.setText("");
     	
     	boolean validation = true;
-    	if(LoginUsername.getText().isEmpty()) {
-    		UsernameValidation.setText("Username field is mandatory");
+    	if(loginUsername.getText().isEmpty()) {
+    		usernameValidation.setText("Username field is mandatory");
     		validation = false;
     	}
     	
-    	if(LoginPassword.getText().isEmpty()) {
-    		PasswordValidation.setText("Password field is mandatory");
+    	if(loginPassword.getText().isEmpty()) {
+    		passwordValidation.setText("Password field is mandatory");
     		validation = false;
     	}
     	
@@ -80,9 +80,9 @@ public class LoginController {
     		return;
     	}
     	
-    	User usr = loginModel.validateUser(LoginUsername.getText(), LoginPassword.getText());
+    	User usr = loginModel.validateUser(loginUsername.getText(), loginPassword.getText());
     	if(usr == null) {
-    		LoginValidation.setText("Invalid username or password");
+    		loginValidation.setText("Invalid username or password");
     		return;
     	}
     	this.loggedUsr = usr;
@@ -93,8 +93,6 @@ public class LoginController {
     }
 
 	public LoginController (){
-	
-		//Uncomment next sentence to use data from server instead dummy data
 		loginModel.setDummyData(false);
 	}
 	

@@ -34,7 +34,6 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			//This start method allow us to load a Scene (only one).
-			//Uncomment the desire to load scene and comment the other ones 
 			/*
 			 * We use an instance of Pane, so we don't worry about what kind of pane is used
 			 * in the FXML file. Pane is the father of all container (BorderPane, 
@@ -90,12 +89,7 @@ public class Main extends Application {
 			Properties prop = buildServerProperties();
 			ConnectionManager connection = new ConnectionManager(prop);
 			//Connecting as public (anonymous) for your group
-			connection.setAnonymousAPIKey("ANON03_336"); ///*Put your group API Key here*/ ????
-			//Login whitout login form:
-			//	connection.login("Reader2", "reader2"); //User: Reader2 and password "reader2" 
-			//    User user = new User ("Reader2", 
-			//	Integer.parseInt(connection.getIdUser()));
-			//	controller.setUsr(user);
+			connection.setAnonymousAPIKey("ANON03_336");
 			controller.setConnectionManager(connection);		
 
 			//end code for main window reader

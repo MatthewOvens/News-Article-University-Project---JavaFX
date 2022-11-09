@@ -154,7 +154,7 @@ class NewsReaderModel {
 		String[] abstractImage = { "file:./images/abstract1.jpg", "file:./images/abstract2.jpg",
 				"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9zhpNZ-Rz0pv_dO1fQejnGFQlRaTRyMOmZHxSTXeJ-a-1P9x5",
 				null };
-		Categories[] category = { Categories.SPORTS, Categories.ECONOMY, Categories.INTERNATIONAL, Categories.ECONOMY };
+		Categories[] category = { Categories.SPORTS, Categories.ECONOMY, Categories.ECONOMY };
 
 		for (int i = 0; i < titles.length; i++) {
 			// idUser == 2 correspond to Reader1 in dummy data test
@@ -165,13 +165,12 @@ class NewsReaderModel {
 		}
 	}
 	
-	//Function to retrive the "noImage.jpg"
+	//Function to retrieve the "noImage.jpg"
 	Image getNoImage() {
 		Image image = null;
 		try {
 			image = new Image(new FileInputStream("src/images/noImage.jpg"));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -184,12 +183,10 @@ class NewsReaderModel {
 			articlesList = connectionManager.getArticles();
 			for (Article article : articlesList) {// FOR
 				this.articles.add(article);
-		} // For
+			}
 		} catch (ServerCommunicationError e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -205,7 +202,6 @@ class NewsReaderModel {
 			this.categories.add(cat);
 		}
 	}	
-	
 	
 
 }

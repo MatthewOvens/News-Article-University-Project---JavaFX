@@ -13,47 +13,48 @@
 
 <AnchorPane prefHeight="420.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ArticleEditController">
    <children>
-      <HTMLEditor fx:id="EditTextAbstract" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="10.0" layoutY="164.0" prefHeight="206.0" prefWidth="547.0" />
-      <MFXToggleButton fx:id="BodytoAbstract" layoutX="341.0" layoutY="122.0" onMouseClicked="#onBodyAbstract" prefHeight="41.0" prefWidth="115.0" text="Abstract">
+      <HTMLEditor fx:id="editTextAbstract" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="10.0" layoutY="163.0" prefHeight="206.0" prefWidth="547.0" />
+      <MFXToggleButton fx:id="bodytoAbstract" layoutX="341.0" layoutY="122.0" onMouseClicked="#onBodyAbstract" prefHeight="41.0" prefWidth="115.0" text="Abstract">
          <font>
             <Font size="15.0" />
          </font>
       </MFXToggleButton>
-      <MFXToggleButton fx:id="TextToHtml" layoutX="459.0" layoutY="122.0" onMouseClicked="#onTextHtml" prefHeight="41.0" prefWidth="100.0" text="Text">
+      <MFXToggleButton fx:id="textToHtml" layoutX="459.0" layoutY="122.0" onMouseClicked="#onTextHtml" prefHeight="41.0" prefWidth="100.0" text="Text">
          <font>
             <Font size="15.0" />
          </font>
       </MFXToggleButton>
-      <MFXButton fx:id="Back" buttonType="RAISED" layoutX="14.0" layoutY="381.0" onAction="#onBack" text="Back">
+      <MFXButton fx:id="back" buttonType="RAISED" layoutX="14.0" layoutY="381.0" onAction="#onBack" style="-fx-background-color: #0404B4;" text="Back" textFill="#fafffe">
          <font>
             <Font size="15.0" />
          </font>
       </MFXButton>
-      <MFXButton fx:id="SendAndBack" buttonType="RAISED" layoutX="80.0" layoutY="381.0" onAction="#onSendAndBack" text="Send &amp; Back">
+      <MFXButton fx:id="sendAndBack" buttonType="RAISED" layoutX="80.0" layoutY="381.0" onAction="#onSendAndBack" style="-fx-background-color: #0404B4;" text="Send &amp; Back" textFill="#fafffe">
          <font>
             <Font size="15.0" />
          </font>
       </MFXButton>
-      <MFXButton fx:id="SaveToFile" buttonType="RAISED" layoutX="459.0" layoutY="381.0" onAction="#onSaveToFile" text="Save to file">
+      <MFXButton fx:id="saveToFile" buttonType="RAISED" layoutX="459.0" layoutY="381.0" onAction="#onSaveToFile" style="-fx-background-color: #0404B4;" text="Save to file" textFill="#fafffe">
          <font>
             <Font size="15.0" />
          </font>
       </MFXButton>
-      <ImageView fx:id="EditImage" fitHeight="133.0" fitWidth="159.0" layoutX="14.0" layoutY="20.0" onMouseClicked="#onImageClicked" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="210.0" layoutY="36.0" prefHeight="22.0" prefWidth="45.0" text="Title:">
+      <ImageView fx:id="editImage" fitHeight="133.0" fitWidth="159.0" layoutX="14.0" layoutY="20.0" onMouseClicked="#onImageClicked" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="210.0" layoutY="22.0" prefHeight="22.0" prefWidth="45.0" text="Title:">
          <font>
-            <Font size="15.0" />
+            <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="210.0" layoutY="76.0" text="Subtitle:">
+      <Label layoutX="210.0" layoutY="73.0" text="Subtitle:">
          <font>
-            <Font size="15.0" />
+            <Font size="17.0" />
          </font>
       </Label>
-      <TextField fx:id="EditTitle" layoutX="283.0" layoutY="31.0" prefHeight="31.0" prefWidth="236.0" />
-      <TextField fx:id="EditSubtitle" layoutX="283.0" layoutY="71.0" prefHeight="31.0" prefWidth="236.0" />
-      <MFXComboBox fx:id="categories" layoutX="210.0" layoutY="111.0" prefHeight="21.0" prefWidth="124.0" />
-      <HTMLEditor fx:id="EditTextBody" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="10.0" layoutY="164.0" prefHeight="206.0" prefWidth="547.0" visible="false" />
-      <TextArea fx:id="HtmlText" layoutX="10.0" layoutY="163.0" prefHeight="206.0" prefWidth="547.0" visible="false" />
+      <TextField fx:id="editTitle" layoutX="283.0" layoutY="20.0" prefHeight="31.0" prefWidth="255.0" style="-fx-border-color: #0404B4; -fx-border-radius: 5;" />
+      <TextField fx:id="editSubtitle" layoutX="283.0" layoutY="70.0" prefHeight="31.0" prefWidth="255.0" style="-fx-border-color: #0404B4; -fx-border-radius: 5;" />
+      <MFXComboBox fx:id="categories" floatMode="DISABLED" layoutX="210.0" layoutY="122.0" prefHeight="21.0" prefWidth="124.0" style="-fx-border-color: #0404B4;" />
+      <HTMLEditor fx:id="editTextBody" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="10.0" layoutY="164.0" prefHeight="206.0" prefWidth="547.0" visible="false" />
+      <TextArea fx:id="htmlAbstract" layoutX="10.0" layoutY="163.0" prefHeight="206.0" prefWidth="547.0" visible="false" />
+      <TextArea fx:id="htmlBody" layoutX="10.0" layoutY="162.0" prefHeight="206.0" prefWidth="547.0" visible="false" />
    </children>
 </AnchorPane>

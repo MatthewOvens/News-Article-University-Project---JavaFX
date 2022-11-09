@@ -53,115 +53,90 @@ import javafx.collections.ObservableList;
 
 public class NewsReaderController {
 	
-//	The username for your group is: DEV_TEAM_03
-//	Its password: 123603@3
-	
 	private NewsReaderModel newsReaderModel = new NewsReaderModel();
 	
 	private User usr;
 
-	//TODO add attributes and methods as needed
     @FXML
-    private MenuItem Delete;
+    private MenuItem delete;
 
     @FXML
-    private MenuItem Edit;
+    private MenuItem edit;
 
     @FXML
-    private MenuItem Exit;
+    private MenuItem exit;
 
     @FXML
-    private MenuItem LoadArticle;
+    private MenuItem loadArticle;
 
     @FXML
-    private MenuItem NewArticle;
+    private MenuItem newArticle;
 
     @FXML
-    private MenuItem ToLogin;
+    private MenuItem toLogin;
     
     @FXML
-    private ListView<Article> ListofArticles;
+    private ListView<Article> listOfArticles;
     
     @FXML
-    private MFXButton ReadMore;
+    private MFXButton readMore;
 
     @FXML
-    private ImageView NewsReaderImage;
+    private ImageView newsReaderImage;
 
     @FXML
-    private TextArea NewsReaderText;
+    private TextArea newsReaderText;
     
     @FXML
     private MFXComboBox<Categories> categories;
     
     private FilteredList<Article> filteredData;
 
+    /*
+     * Function to delete a selected article. Could be done only if the selected article belong to the logged user
+     */
     @FXML
     void onDelete(ActionEvent event) {
-    	
-    	System.out.print(usr);
-    	
-    	//Controls also for the belonging of the article to the user?
-    	//Yes, needs to edit or delete only articles createdby him (articles with editId == user.id)
-//    	if(usr != null) {
-    		newsReaderModel.deleteArticle(ListofArticles.getSelectionModel().getSelectedItem());
-//    	}
-//    	else {
-//    		System.out.println("Not authorized user!");
-//    	}
-    	
-
+    	if(getUsr() != null && listOfArticles.getSelectionModel().getSelectedItem().getIdUser() == getUsr().getIdUser()) {
+    		newsReaderModel.deleteArticle(listOfArticles.getSelectionModel().getSelectedItem());
+    	}
+    	else {
+    		Alert alert = new Alert(AlertType.ERROR, "Not authorized user! Can't be deleted", ButtonType.OK);
+			alert.showAndWait();
+    	}
     }
 
     @FXML
     void onEdit(ActionEvent event) {
-//    	Scene parentScene = this.ReadMore.getScene();
-//		FXMLLoader loader = null;
-//		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-//			Pane root = loader.load();
-//			Scene scene = new Scene(root);
-//			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-//			Window parentStage = parentScene.getWindow();
-//			Stage stage = new Stage();
-//			stage.initOwner(parentStage);
-//			stage.setScene(scene);
-//			stage.setTitle("Edit Article");
-			
-			Stage stage = openScene(loader, this.ReadMore.getScene(), AppScenes.EDITOR.getFxmlFile());
-			stage.setTitle("Edit Article");
-			
-			ArticleEditController controller = loader.<ArticleEditController>getController();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+		
+		Stage stage = openScene(loader, this.readMore.getScene(), AppScenes.EDITOR.getFxmlFile());
+		stage.setTitle("edit Article");
+		
+		ArticleEditController controller = loader.<ArticleEditController>getController();
 
-			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
-			controller.setUsr(usr);
+		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+		controller.setUsr(usr);
+		
+		Article selected = this.listOfArticles.getSelectionModel().selectedItemProperty().get();
+		
+		if(selected != null) {
+			Article articleFromServer = this.newsReaderModel.getFullArticle(selected.getIdArticle());
 			
-			Article selected = this.ListofArticles.getSelectionModel().selectedItemProperty().get();
-			
-			if(selected != null)
-			{
-				Article articleFromServer = this.newsReaderModel.getFullArticle(selected.getIdArticle());
-				
-				controller.setArticle(articleFromServer);
-				//Uncomment next sentence if you want clear change when user close the window
-				//stage.setOnCloseRequest(ev ->controller.exitEdit(ev));
-				//user response is required before continuing with the program
-				stage.initModality(Modality.WINDOW_MODAL);
-				stage.showAndWait();
+			controller.setArticle(articleFromServer);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.showAndWait();
 
-				if (controller.getIsSaved()){ 
-					this.getData();
-				}
+			if (controller.getIsSaved()){ 
+				this.getData();
 			}
-			else
-			{
-				System.out.println("Nothing is selected");
-				//TODO alert the user that he hasn't select any article
-			}
-
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		}
+		else
+		{
+			Alert alert = new Alert(AlertType.CONFIRMATION, "No article selected" + usr.getIdUser(), ButtonType.OK);
+			alert.showAndWait();
+		}
+			
     }
 
     @FXML
@@ -176,148 +151,100 @@ public class NewsReaderController {
     	 fileChooser.getExtensionFilters().addAll(
     	         new ExtensionFilter("News Files", "*.news"),
     	         new ExtensionFilter("All Files", "*.*"));
-    	 Window parentStage = this.ReadMore.getScene().getWindow();
+    	 Window parentStage = this.readMore.getScene().getWindow();
     	 File selectedFile = fileChooser.showOpenDialog(parentStage);
     	 //Getting the URI for the local file
     	 if (selectedFile != null) {
     		 Path path = FileSystems.getDefault().getPath(selectedFile.getAbsolutePath());
 
-//    		Scene parentScene = this.ReadMore.getScene();
-//			FXMLLoader loader = null;
-//			try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-//				Pane root = loader.load();
-//				Scene scene = new Scene(root);
-//				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-//				Window parentStageNews = parentScene.getWindow();
-//				Stage stage = new Stage();
-//				stage.initOwner(parentStageNews);
-//				stage.setScene(scene);
-//				stage.setTitle("Edit Article");
-				
-				Stage stage = openScene(loader, this.ReadMore.getScene(), AppScenes.EDITOR.getFxmlFile());
-				stage.setTitle("Edit Article from file");
-				
-				ArticleEditController controller = loader.<ArticleEditController>getController();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+			
+			Stage stage = openScene(loader, this.readMore.getScene(), AppScenes.EDITOR.getFxmlFile());
+			stage.setTitle("edit Article from file");
+			
+			ArticleEditController controller = loader.<ArticleEditController>getController();
 
-				controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+			
+			controller.setUsr(usr);
+			
+			try {
+				Article articleFromFile = JsonArticle.jsonToArticle(JsonArticle.readFile(path.toString()));
 				
-				//TODO Can the user save it to database? Maybe check if he's logged?
-				controller.setUsr(usr);
-				
-				try {
-					Article articleFromFile = JsonArticle.jsonToArticle(JsonArticle.readFile(path.toString()));
-					
-					if(articleFromFile != null)
-					{
-						controller.setArticle(articleFromFile);
-						//Uncomment next sentence if you want clear change when user close the window
-						//stage.setOnCloseRequest(ev ->controller.exitEdit(ev));
-						//user response is required before continuing with the program
-						stage.initModality(Modality.WINDOW_MODAL);
-						stage.showAndWait();
-	
-						if (controller.getIsSaved()){ 
-							this.getData();
-						}
-					}
-					else
-					{
-						System.out.println("Nothing is selected");
-						//TODO alert the user that he hasn't select any article
-					}
+				if(articleFromFile != null)
+				{
+					controller.setArticle(articleFromFile);
+					stage.initModality(Modality.WINDOW_MODAL);
+					stage.showAndWait();
 
-				} catch (Exception e) {
-					e.printStackTrace();
+					if (controller.getIsSaved()){ 
+						this.getData();
+					}
 				}
-    		 
+				else
+				{
+					Alert alert = new Alert(AlertType.CONFIRMATION, "No article selected", ButtonType.OK);
+					alert.showAndWait();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		 
     	 }
     }
 
 
     @FXML
     void onNewArticle(ActionEvent event) {
-//    	Scene parentScene = this.ReadMore.getScene();
-//		FXMLLoader loader = null;
-//		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-//			Pane root = loader.load();
-//			Scene scene = new Scene(root);
-//			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-//			Window parentStage = parentScene.getWindow();
-//			Stage stage = new Stage();
-//			stage.initOwner(parentStage);
-//			stage.setScene(scene);
-//			stage.setTitle("Create Article");
-			
-			Stage stage = openScene(loader, this.ReadMore.getScene(), AppScenes.EDITOR.getFxmlFile());
-			stage.setTitle("Create a new article");
-			
-			ArticleEditController controller = loader.<ArticleEditController>getController();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+		
+		Stage stage = openScene(loader, this.readMore.getScene(), AppScenes.EDITOR.getFxmlFile());
+		stage.setTitle("Create a new article");
+		
+		ArticleEditController controller = loader.<ArticleEditController>getController();
 
-			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
-			controller.setUsr(null); //Error
-			controller.setArticle(null);
-			//Uncomment next sentence if you want clear change when user close the window
-			//stage.setOnCloseRequest(ev ->controller.exitEdit(ev));
-			//user response is required before continuing with the program
-			stage.initModality(Modality.WINDOW_MODAL);
-			stage.showAndWait();
+		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+		controller.setUsr(usr);
+		controller.setArticle(null);
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.showAndWait();
 
-			if (controller.getIsSaved()){ 
-				this.getData();
-			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		if (controller.getIsSaved()){ 
+			this.getData();
+		}
     }
 
     @FXML
     void onReadMore(ActionEvent event) {
-    	
-//    	try {
-    		FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.NEWS_DETAILS.getFxmlFile()));
-//			AppScenes.NEWS_DETAILS.getFxmlFile()));
-//    		Parent root1 = (Parent) loader.load();
-//    		Stage stage = new Stage();
-//    		stage.setScene(new Scene(root1));
-    				
-    		Stage stage = openScene(loader, this.ReadMore.getScene(), AppScenes.NEWS_DETAILS.getFxmlFile());
-    		stage.setTitle("Article details");
-    		
-    		ArticleDetailsController controller = loader.<ArticleDetailsController>getController();
-    		controller.initData(ListofArticles.getSelectionModel().getSelectedItem(), getUsr());
-    		
-    		stage.show();
-//    	}
-//    	catch(Exception e) {
-//    		System.out.println(e.toString());
-//    	}
-    	
+
+		FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.NEWS_DETAILS.getFxmlFile()));
+				
+		Stage stage = openScene(loader, this.readMore.getScene(), AppScenes.NEWS_DETAILS.getFxmlFile());
+		stage.setTitle("Article details");
+		
+		ArticleDetailsController controller = loader.<ArticleDetailsController>getController();
+		Article articleFromServer = this.newsReaderModel.getFullArticle(listOfArticles.getSelectionModel().getSelectedItem().getIdArticle());
+		controller.initData(articleFromServer, getUsr());
+		
+		stage.show();    	
 
     }
 
     @FXML
-    void onToLogin(ActionEvent event) {    	
-//    	Scene parentScene = this.ReadMore.getScene();
-//		FXMLLoader loader = null;
+    void onToLogin(ActionEvent event) {
 			
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.LOGIN.getFxmlFile()));
 		
-		///////
-		Stage stage = openScene(loader, this.ReadMore.getScene(), AppScenes.LOGIN.getFxmlFile());
+		Stage stage = openScene(loader, this.readMore.getScene(), AppScenes.LOGIN.getFxmlFile());
 		stage.setTitle("Login");
 		
 		LoginController controller = loader.<LoginController>getController();
 		controller.setConnectionManager(this.newsReaderModel.getConnectionManager());
-		//Uncomment next sentence if you want clear change when user close the window
-		//stage.setOnCloseRequest(ev ->controller.exitEdit(ev));
-		//user response is required before continuing with the program
 		stage.initModality(Modality.WINDOW_MODAL);
 		stage.showAndWait();
 
 		if (controller.getLoggedUsr() != null) { 
-			System.out.println("Nice user");
 			this.setUsr(controller.getLoggedUsr());
 			Alert alert = new Alert(AlertType.CONFIRMATION, "Login successful", ButtonType.OK);
 			alert.showAndWait();
@@ -352,22 +279,16 @@ public class NewsReaderController {
     
 
 	public NewsReaderController() {
-		//TODO
-		//Uncomment next sentence to use data from server instead dummy data
-		newsReaderModel.setDummyData(false);
-		//Get text Label
-		
+		newsReaderModel.setDummyData(false);		
 	}
 	
 
 	private void getData() {
-		//TODO retrieve data and update UI
-		//The method newsReaderModel.retrieveData() can be used to retrieve data  
 		newsReaderModel.retrieveData();
 		
     	filteredData = new FilteredList<Article>(newsReaderModel.getArticles(), article -> true);
     	
-    	this.ListofArticles.setItems(filteredData);
+    	this.listOfArticles.setItems(filteredData);
 	}
 
 	/**
@@ -375,6 +296,14 @@ public class NewsReaderController {
 	 */
 	User getUsr() {
 		return usr;
+	}
+	
+	/*
+	 * Function to unlock buttons and element for a registered user who logged in
+	 */
+	void areElementsDisabledForLoggedUser(Boolean areUnlocked) {
+		edit.setDisable(areUnlocked);
+		delete.setDisable(areUnlocked);
 	}
 
 	void setConnectionManager (ConnectionManager connection){
@@ -385,7 +314,6 @@ public class NewsReaderController {
 		ObservableList<Categories> list = FXCollections.observableArrayList();
 		list.add(Categories.ALL);
 		list.add(Categories.ECONOMY);
-		list.add(Categories.INTERNATIONAL);
 		list.add(Categories.NATIONAL);
 		list.add(Categories.SPORTS);
 		list.add(Categories.TECHNOLOGY);
@@ -406,10 +334,6 @@ public class NewsReaderController {
 				{
 					filteredData.setPredicate(a -> a.getCategory().equalsIgnoreCase(Categories.ECONOMY.toString()));
 				}
-				else if(newValue.equals(Categories.INTERNATIONAL))
-				{
-					filteredData.setPredicate(a -> a.getCategory().equalsIgnoreCase(Categories.INTERNATIONAL.toString()));
-				}
 				else if(newValue.equals(Categories.NATIONAL))
 				{
 					filteredData.setPredicate(a -> a.getCategory().equalsIgnoreCase(Categories.NATIONAL.toString()));
@@ -427,29 +351,40 @@ public class NewsReaderController {
 			
 		});
 		
-		ReadMore.setDisable(false);
-		this.ListofArticles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
+		readMore.setDisable(true);
+		this.areElementsDisabledForLoggedUser(true);
+		
+		this.listOfArticles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
 			@Override
 			/**
 			 * When the selected element is changed this event handler is called
 			 */
-			public void changed(ObservableValue<? extends Article> observable, Article oldValue, Article newValue) {
-				if (newValue != null){
-					ReadMore.setDisable(false);
-					NewsReaderText.setText(newValue.getAbstractText());
+			public void changed(ObservableValue<? extends Article> observable, Article oldValue, Article newArticle) {
+				if (newArticle != null){
 					
-					if(newValue.getImageData() != null) {
-						NewsReaderImage.setImage(newValue.getImageData());
+					if(getUsr() != null && newArticle.getIdUser() == getUsr().getIdUser()) {
+						areElementsDisabledForLoggedUser(false);
 					}
 					else {
-						NewsReaderImage.setImage(newsReaderModel.getNoImage());	
+						areElementsDisabledForLoggedUser(true);
+					}
+					
+					readMore.setDisable(false);
+					
+					newsReaderText.setText(newArticle.getAbstractText());
+					
+					if(newArticle.getImageData() != null) {
+						newsReaderImage.setImage(newArticle.getImageData());
+					}
+					else {
+						newsReaderImage.setImage(newsReaderModel.getNoImage());	
 					}
 					
 				}
 				else { //Nothing selected
-					ReadMore.setDisable(true);
-					NewsReaderText.setText("");
-					NewsReaderImage.setImage(null);
+					readMore.setDisable(true);
+					newsReaderText.setText("");
+					newsReaderImage.setImage(null);
 				}
 				
 			}
@@ -461,11 +396,9 @@ public class NewsReaderController {
 	 * @param usr the usr to set
 	 */
 	void setUsr(User usr) {
-		
 		this.usr = usr;
 		//Reload articles
 		this.getData();
-		//TODO Update UI
 	}
 
 

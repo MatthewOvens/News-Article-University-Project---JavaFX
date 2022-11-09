@@ -49,6 +49,9 @@ import serverConection.exceptions.ServerCommunicationError;
 
 
 public class ArticleEditController {
+	
+	private NewsReaderModel newsReaderModel = new NewsReaderModel();
+	
 	/**
 	 * Connection used to send article to server after editing process
 	 */
@@ -62,40 +65,39 @@ public class ArticleEditController {
 	 * User whose is editing the article 
 	 */
 	private User usr;
-	//TODO add attributes and methods as needed
 
     @FXML
-    private MFXButton Back;
+    private MFXButton back;
 
     @FXML
-    private MFXToggleButton BodytoAbstract;
+    private MFXToggleButton bodytoAbstract;
 
     @FXML
-    private ImageView EditImage;
+    private ImageView editImage;
 
     @FXML
-    private TextField EditSubtitle;
+    private TextField editSubtitle;
 
     @FXML
-    private HTMLEditor EditTextAbstract;
+    private HTMLEditor editTextAbstract;
 
     @FXML
-    private HTMLEditor EditTextBody;
+    private HTMLEditor editTextBody;
     
     @FXML
-    private TextArea HtmlText;
+    private TextArea htmlText;
 
     @FXML
-    private TextField EditTitle;
+    private TextField editTitle;
 
     @FXML
-    private MFXButton SaveToFile;
+    private MFXButton saveToFile;
 
     @FXML
-    private MFXButton SendAndBack;
+    private MFXButton sendAndBack;
 
     @FXML
-    private MFXToggleButton TextToHtml;
+    private MFXToggleButton textToHtml;
     
     @FXML
     private MFXComboBox<Categories> categories;
@@ -129,44 +131,43 @@ public class ArticleEditController {
     
     @FXML
     void onTextHtml(MouseEvent event) {
-    	if(this.TextToHtml.isSelected()) {
-    		this.HtmlText.setVisible(true);
-    		this.HtmlText.setText(this.BodytoAbstract.isSelected() 
-    										? this.EditTextBody.getHtmlText() : this.EditTextAbstract.getHtmlText());
+    	if(this.textToHtml.isSelected()) {
+    		this.htmlText.setVisible(true);
+    		this.htmlText.setText(this.bodytoAbstract.isSelected() 
+    										? this.editTextBody.getHtmlText() : this.editTextAbstract.getHtmlText());
     	}
     	else
     	{
-    		this.HtmlText.setVisible(false);
-    		if(this.BodytoAbstract.isSelected()) {
-    			this.EditTextBody.setHtmlText(this.HtmlText.getText());
+    		this.htmlText.setVisible(false);
+    		if(this.bodytoAbstract.isSelected()) {
+    			this.editTextBody.setHtmlText(this.htmlText.getText());
     		}
     		else
     		{
-    			this.EditTextAbstract.setHtmlText(this.HtmlText.getText());
+    			this.editTextAbstract.setHtmlText(this.htmlText.getText());
     		}
     	}
-    	//TODO, set text
     }
     
     @FXML
     void onBodyAbstract(MouseEvent event) {
-    	if(this.BodytoAbstract.isSelected()) {
-    		this.EditTextAbstract.setVisible(false);
-    		this.EditTextBody.setVisible(true);
-    		this.BodytoAbstract.setText("Body");
+    	if(this.bodytoAbstract.isSelected()) {
+    		this.editTextAbstract.setVisible(false);
+    		this.editTextBody.setVisible(true);
+    		this.bodytoAbstract.setText("Body");
     	}
     	else
     	{
-    		this.EditTextAbstract.setVisible(true);
-    		this.EditTextBody.setVisible(false);
-    		this.BodytoAbstract.setText("Abstract");
+    		this.editTextAbstract.setVisible(true);
+    		this.editTextBody.setVisible(false);
+    		this.bodytoAbstract.setText("Abstract");
     	}
     }
 
 
 	@FXML
 	void onImageClicked(MouseEvent event) {
-		if (event.getClickCount() >= 2) {
+		if (event.getClickCount() >= 1) {
 			Scene parentScene = ((Node) event.getSource()).getScene();
 			FXMLLoader loader = null;
 			try {
@@ -184,9 +185,7 @@ public class ArticleEditController {
 				ImagePickerController controller = loader.<ImagePickerController>getController();
 				Image image = controller.getImage();
 				if (image != null) {
-					//editingArticle.setImage(image);
-					//TODO Update image on UI
-					this.EditImage.setImage(image);
+					this.editImage.setImage(image);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -201,22 +200,15 @@ public class ArticleEditController {
 	 * @return true if only if article was been correctly send
 	 */
 	private boolean send() {
-		String titleText = this.EditTitle.getText(); // TODO Get article title
-		Categories category = this.categories.getSelectedItem(); //TODO Get article category
+		String titleText = this.editTitle.getText();
+		Categories category = this.categories.getSelectedItem();
 		if (titleText == null || category == null || 
 				titleText.equals("") || category == Categories.ALL) {
 			Alert alert = new Alert(AlertType.ERROR, "Imposible send the article!! Title and categoy are mandatory", ButtonType.OK);
 			alert.showAndWait();
 			return false;
 		}
-//TODO prepare and send using connection.saveArticle( ...)
-		
-//		System.out.println(
-//				JsonArticle.imagetToString(this.EditImage.getImage()));
 		try {
-//			System.out.println(this.EditImage.getImage().getUrl());
-			
-			//TODO check if it is edit. Save to file :)
 			if(this.editMode) {
 				modifyArticle();
 				this.editingArticle.commit();
@@ -224,11 +216,10 @@ public class ArticleEditController {
 			}
 			else
 			{
-				this.connection.saveArticle(new Article(titleText, this.usr.getIdUser(), category.toString(), this.EditTextAbstract.getHtmlText()));				
+				this.connection.saveArticle(new Article(titleText, this.usr.getIdUser(), category.toString(), this.editTextAbstract.getHtmlText()));				
 			}
 			this.isSaved = true;
 		} catch (ServerCommunicationError e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -240,12 +231,12 @@ public class ArticleEditController {
 	 * Function to avoid duplicate code. It actually modify the article
 	 */
 	void modifyArticle() {
-		this.editingArticle.titleProperty().set(this.EditTitle.getText());
-		this.editingArticle.subtitleProperty().set(this.EditSubtitle.getText());
-		this.editingArticle.abstractTextProperty().set(this.EditTextAbstract.getHtmlText());
+		this.editingArticle.titleProperty().set(this.editTitle.getText());
+		this.editingArticle.subtitleProperty().set(this.editSubtitle.getText());
+		this.editingArticle.abstractTextProperty().set(this.editTextAbstract.getHtmlText());
 		this.editingArticle.setCategory(this.categories.getSelectedItem());
-		this.editingArticle.bodyTextProperty().set(this.EditTextBody.getHtmlText());
-		this.editingArticle.setImage(this.EditImage.getImage());		
+		this.editingArticle.bodyTextProperty().set(this.editTextBody.getHtmlText());
+		this.editingArticle.setImage(this.editImage.getImage());		
 	}
 	
 	/**
@@ -255,34 +246,15 @@ public class ArticleEditController {
 	 */
 	void setConnectionMannager(ConnectionManager connection) {
 		this.connection = connection;
-		//TODO enable send and back button
 		ObservableList<Categories> list = FXCollections.observableArrayList();
 		list.add(Categories.ALL);
 		list.add(Categories.ECONOMY);
-		list.add(Categories.INTERNATIONAL);
 		list.add(Categories.NATIONAL);
 		list.add(Categories.SPORTS);
 		list.add(Categories.TECHNOLOGY);
 			
 		this.categories.setItems(list);
 		this.categories.selectFirst();
-		
-//		this.EditText.setOnKeyReleased(new EventHandler<KeyEvent>() {
-//
-//			@Override
-//			public void handle(KeyEvent event) {
-//				// TODO Auto-generated method stub
-//				System.out.println(EditText.getHtmlText());
-//		    	if(BodytoAbstract.isSelected()) {
-//		    		abstractText = EditText.getHtmlText();
-//		    	}
-//		    	else
-//		    	{
-//		    		body = EditText.getHtmlText();
-//		    	}
-//			}
-//			
-//		});
 	}
 
 	/**
@@ -296,11 +268,8 @@ public class ArticleEditController {
 		}
 		else
 		{
-			this.SendAndBack.setDisable(true);
+			this.sendAndBack.setDisable(true);
 		}
-
-		//TODO Update UI and controls 
-		
 	}
 
 	/**
@@ -322,20 +291,26 @@ public class ArticleEditController {
 	 *            the article to set
 	 */
 	void setArticle(Article article) {
-		
-		//Check of the User??
-		
 		this.editingArticle = (article != null) ? new ArticleEditModel(article) : new ArticleEditModel(usr);
 		//TODO update UI
 		if(article != null) {
-			this.EditTitle.setText(article.getTitle());
-			this.EditSubtitle.setText(article.getSubtitle());
-			this.EditTextAbstract.setHtmlText(article.getAbstractText());
-			this.EditTextBody.setHtmlText(article.getBodyText());
+			this.editTitle.setText(article.getTitle());
+			this.editSubtitle.setText(article.getSubtitle());
+			this.editTextAbstract.setHtmlText(article.getAbstractText());
+			this.editTextBody.setHtmlText(article.getBodyText());
 			this.categories.selectItem(Categories.valueOf(article.getCategory().toUpperCase()));
-			this.EditImage.setImage(article.getImageData());
+			
+			if(article.getImageData() != null) {
+				this.editImage.setImage(article.getImageData());
+			}
+			else {
+				this.editImage.setImage(newsReaderModel.getNoImage());	
+			}
 			
 			this.editMode = true;
+		}
+		else {
+			this.editImage.setImage(newsReaderModel.getNoImage());	
 		}
 	}
 	
@@ -344,7 +319,6 @@ public class ArticleEditController {
 	 * Article must have a title
 	 */
 	private void write() {
-		//TODO Consolidate all changes	
 		this.editingArticle.commit();
 		//Removes special characters not allowed for filenames
 		String name = this.getArticle().getTitle().replaceAll("\\||/|\\\\|:|\\?","");

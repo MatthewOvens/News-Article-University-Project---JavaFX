@@ -7,34 +7,44 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NewsReaderController">
    <children>
-      <Label layoutX="20.0" layoutY="14.0" text="News Manager ">
+      <Label layoutX="106.0" layoutY="14.0" text="News Manager ">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <ImageView fx:id="NewsReaderImage" fitHeight="130.0" fitWidth="145.0" layoutX="283.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" />
-      <TextArea fx:id="NewsReaderText" layoutX="229.0" layoutY="221.0" prefHeight="130.0" prefWidth="244.0" wrapText="true" />
-      <MFXButton fx:id="ReadMore" layoutX="390.0" layoutY="360.0" onAction="#onReadMore" text="Read more" />
-      <MenuButton alignment="CENTER" layoutX="383.0" layoutY="24.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="90.0" text="Menu">
-        <items>
-        	<MenuItem fx:id="LoadArticle" mnemonicParsing="false" onAction="#onLoadArticleFromFile" text="Load article from file" />
-            <MenuItem fx:id="ToLogin" mnemonicParsing="false" onAction="#onToLogin" text="Login" />
-            <MenuItem fx:id="NewArticle" mnemonicParsing="false" onAction="#onNewArticle" text="New" />
-            <MenuItem fx:id="Edit" mnemonicParsing="false" onAction="#onEdit" text="Edit" />
-            <MenuItem fx:id="Delete" mnemonicParsing="false" onAction="#onDelete" text="Delete" />
-            <MenuItem fx:id="Exit" mnemonicParsing="false" onAction="#onExit" text="Exit" />
-        </items>
+      <ImageView fx:id="newsReaderImage" fitHeight="130.0" fitWidth="145.0" layoutX="278.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" />
+      <TextArea fx:id="newsReaderText" editable="false" layoutX="209.0" layoutY="223.0" prefHeight="130.0" prefWidth="266.0" style="-fx-border-color: #0404B4; -fx-border-radius: 5;" wrapText="true" />
+      <MFXButton fx:id="readMore" buttonType="RAISED" layoutX="294.0" layoutY="361.0" onAction="#onReadMore" style="-fx-background-color: #0404B4;" text="Read more" textFill="#fafffe">
          <font>
             <Font size="15.0" />
+         </font></MFXButton>
+      <MenuButton alignment="CENTER" layoutX="370.0" layoutY="20.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-border-color: #0404B4; -fx-background-color: #FFFFFF; -fx-border-radius: 5;" text="Menu">
+        <items>
+        <MenuItem fx:id="loadArticle" mnemonicParsing="false" onAction="#onLoadArticleFromFile" text="Load article from file" />
+            <MenuItem fx:id="toLogin" mnemonicParsing="false" onAction="#onToLogin" text="Login" />
+            <MenuItem fx:id="newArticle" mnemonicParsing="false" onAction="#onNewArticle" text="New" />
+            <MenuItem fx:id="edit" mnemonicParsing="false" onAction="#onEdit" text="Edit" />
+            <MenuItem fx:id="delete" mnemonicParsing="false" onAction="#onDelete" text="Delete" />
+            <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#onExit" text="Exit" />
+        </items>
+         <font>
+            <Font size="17.0" />
          </font>
       </MenuButton>
-      <ListView fx:id="ListofArticles" layoutX="14.0" layoutY="141.0" prefHeight="241.0" prefWidth="198.0" />
-      <MFXComboBox fx:id="categories" alignment="CENTER" floatMode="DISABLED" layoutX="20.0" layoutY="76.0" />
+      <ListView fx:id="listOfArticles" layoutX="28.0" layoutY="131.0" prefHeight="221.0" prefWidth="146.0" style="-fx-border-color: #0404B4; -fx-border-radius: 5;">
+         <effect>
+            <Blend />
+         </effect></ListView>
+      <MFXComboBox fx:id="categories" floatMode="DISABLED" layoutX="28.0" layoutY="91.0" prefHeight="26.0" prefWidth="146.0" style="-fx-text-alignment: center-center; -fx-border-color: #0404B4;">
+         <font>
+            <Font size="14.0" />
+         </font></MFXComboBox>
    </children>
 </AnchorPane>
