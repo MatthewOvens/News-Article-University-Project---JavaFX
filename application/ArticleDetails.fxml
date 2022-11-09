@@ -3,47 +3,49 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXToggleButton?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ArticleDetailsController">
+<AnchorPane prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ArticleDetailsController">
    <children>
-      <Label fx:id="bodyAbstractLable" alignment="TOP_CENTER" layoutX="397.0" layoutY="161.0" prefHeight="59.0" prefWidth="78.0" style="-fx-border-color: #0404B4; -fx-border-radius: 10; -fx-background-color: #FFFFFF;" text="Body">
+      <Label fx:id="bodyAbstractLable" alignment="TOP_CENTER" layoutX="397.0" layoutY="161.0" prefHeight="59.0" prefWidth="78.0" style="-fx-border-color: #0404B4; -fx-border-radius: 10; -fx-background-color: #FFFFFF;" text="Body" textFill="#444444">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <TextArea fx:id="detailsText" editable="false" layoutX="21.0" layoutY="191.0" prefHeight="160.0" prefWidth="460.0" style="-fx-border-color: #0404B4; -fx-border-radius: 5;" wrapText="true" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="23.0" />
       <ImageView fx:id="detailsImage" fitHeight="135.0" fitWidth="158.0" layoutX="22.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
       <MFXButton fx:id="backBtn" buttonType="RAISED" layoutX="22.0" layoutY="357.0" onAction="#onBackBtn" prefHeight="31.0" prefWidth="78.0" style="-fx-background-color: #0404B4;" text="Back" textFill="#fafffe">
          <font>
             <Font size="15.0" />
          </font>
       </MFXButton>
-      <MFXToggleButton fx:id="bodyToAbstract" layoutX="345.0" layoutY="351.0" onAction="#onChangeBodyAbstract" text="Abstract/Body">
+      <MFXToggleButton fx:id="bodyToAbstract" layoutX="345.0" layoutY="351.0" onAction="#onChangeBodyAbstract" text="Abstract/Body" textFill="#444444">
          <font>
             <Font size="15.0" />
          </font>
       </MFXToggleButton>
-      <Label layoutX="213.0" layoutY="16.0" text="Title:">
+      <Label layoutX="213.0" layoutY="16.0" text="Title:" textFill="#444444">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="213.0" layoutY="72.0" text="Subtitle:">
+      <Label layoutX="213.0" layoutY="72.0" text="Subtitle:" textFill="#444444">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="213.0" layoutY="124.0" text="Category:">
+      <Label layoutX="213.0" layoutY="124.0" text="Category:" textFill="#444444">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="detailsTitle" layoutX="213.0" layoutY="38.0" prefHeight="22.0" prefWidth="262.0" />
-      <Label fx:id="detailsSubtitle" layoutX="213.0" layoutY="95.0" prefHeight="22.0" prefWidth="262.0" />
-      <Label fx:id="detailsCategory" layoutX="213.0" layoutY="151.0" prefHeight="22.0" prefWidth="184.0" />
+      <Label fx:id="detailsTitle" layoutX="213.0" layoutY="38.0" prefHeight="22.0" prefWidth="262.0" textFill="#444444" />
+      <Label fx:id="detailsSubtitle" layoutX="213.0" layoutY="95.0" prefHeight="22.0" prefWidth="262.0" textFill="#444444" />
+      <Label fx:id="detailsCategory" layoutX="213.0" layoutY="151.0" prefHeight="22.0" prefWidth="184.0" textFill="#444444" />
+      <Region layoutX="23.0" layoutY="191.0" prefHeight="160.0" prefWidth="460.0" style="-fx-border-color: #0404B4; -fx-border-radius: 5; -fx-background-color: #FFFFFF; -fx-text-color: #444444;" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.0" />
+      <WebView fx:id="detailsText" layoutX="24.0" layoutY="195.0" prefHeight="152.0" prefWidth="456.0" style="-fx-text-color: #444444;" />
    </children>
 </AnchorPane>

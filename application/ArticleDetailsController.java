@@ -12,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 
@@ -38,7 +39,7 @@ public class ArticleDetailsController {
     @FXML // fx:id="bodyAbstractLable"
     private Label bodyAbstractLable; // Value injected by FXMLLoader 
     @FXML // fx:id="detailsText"
-    private TextArea detailsText; // Value injected by FXMLLoader 
+    private WebView detailsText; // Value injected by FXMLLoader 
     @FXML // fx:id="bodyToAbstract"
     private MFXToggleButton bodyToAbstract; // Value injected by FXMLLoader
 
@@ -89,7 +90,8 @@ public class ArticleDetailsController {
 		}
 		
 		bodyAbstractLable.setText("Abstract");
-		detailsText.setText(article.getAbstractText());
+//		detailsText.setText(article.getAbstractText());
+		detailsText.getEngine().loadContent(article.getAbstractText());
 		
 	}
 	
@@ -103,11 +105,13 @@ public class ArticleDetailsController {
 	void onChangeBodyAbstract() {	
 		if(bodyToAbstract.isSelected()) {
 			bodyAbstractLable.setText("Body");
-			detailsText.setText(article.getBodyText());
+//			detailsText.setText(article.getBodyText());
+			detailsText.getEngine().loadContent(article.getBodyText());
 		}
 		else {
 			bodyAbstractLable.setText("Abstract");
-			detailsText.setText(article.getAbstractText());
+//			detailsText.setText(article.getAbstractText());
+			detailsText.getEngine().loadContent(article.getAbstractText());
 		}
 		
 	}

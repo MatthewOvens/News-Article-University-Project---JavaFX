@@ -85,7 +85,7 @@ public class NewsReaderController {
     private ImageView newsReaderImage;
 
     @FXML
-    private TextArea newsReaderText;
+    private WebView newsReaderText;
     
     @FXML
     private MFXComboBox<Categories> categories;
@@ -97,13 +97,24 @@ public class NewsReaderController {
      */
     @FXML
     void onDelete(ActionEvent event) {
-    	if(getUsr() != null && listOfArticles.getSelectionModel().getSelectedItem().getIdUser() == getUsr().getIdUser()) {
-    		newsReaderModel.deleteArticle(listOfArticles.getSelectionModel().getSelectedItem());
-    	}
-    	else {
-    		Alert alert = new Alert(AlertType.ERROR, "Not authorized user! Can't be deleted", ButtonType.OK);
+    	
+		if(this.listOfArticles.getSelectionModel().selectedItemProperty().get() != null) {
+			
+			if(getUsr() != null && listOfArticles.getSelectionModel().getSelectedItem().getIdUser() == getUsr().getIdUser()) {
+	    		newsReaderModel.deleteArticle(listOfArticles.getSelectionModel().getSelectedItem());
+	    	}
+	    	else {
+	    		Alert alert = new Alert(AlertType.ERROR, "Not authorized user! Can't be deleted", ButtonType.OK);
+				alert.showAndWait();
+	    	}
+			
+		}
+		else
+		{
+			Alert alert = new Alert(AlertType.ERROR, "No article selected", ButtonType.OK);
 			alert.showAndWait();
-    	}
+		}
+    	
     }
 
     @FXML
@@ -133,7 +144,7 @@ public class NewsReaderController {
 		}
 		else
 		{
-			Alert alert = new Alert(AlertType.CONFIRMATION, "No article selected" + usr.getIdUser(), ButtonType.OK);
+			Alert alert = new Alert(AlertType.CONFIRMATION, "No article selected", ButtonType.OK);
 			alert.showAndWait();
 		}
 			
@@ -371,7 +382,8 @@ public class NewsReaderController {
 					
 					readMore.setDisable(false);
 					
-					newsReaderText.setText(newArticle.getAbstractText());
+//					newsReaderText.setText(newArticle.getAbstractText());
+					newsReaderText.getEngine().loadContent(newArticle.getAbstractText());
 					
 					if(newArticle.getImageData() != null) {
 						newsReaderImage.setImage(newArticle.getImageData());
@@ -383,7 +395,8 @@ public class NewsReaderController {
 				}
 				else { //Nothing selected
 					readMore.setDisable(true);
-					newsReaderText.setText("");
+//					newsReaderText.setText("");
+					newsReaderText.getEngine().loadContent("");
 					newsReaderImage.setImage(null);
 				}
 				
